@@ -23,6 +23,7 @@ getEmployees();
 
 /* ---------------GET--------------- */
 router.get("/api/employeesdata", (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
   async function getEmployees() {
     const employees = await Employee.find();
     res.send(employees);
@@ -32,6 +33,7 @@ router.get("/api/employeesdata", (req, res) => {
 });
 
 router.get("/api/employeesdata/:id", (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
   async function getEmployee() {
     if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
       const employee = await Employee.find({ _id: req.params.id });
@@ -49,6 +51,7 @@ router.get("/api/employeesdata/:id", (req, res) => {
 
 /* ---------------POST--------------- */
 router.post("/api/employeesdata", (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
   const newEmployee = {
     name: req.body.name,
     designation: req.body.designation,
@@ -70,6 +73,7 @@ router.post("/api/employeesdata", (req, res) => {
 /* ---------------PUT--------------- */
 
 router.put("/api/employeesdata/:id", (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
   async function updateEmployee() {
     if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
       let employee = await Employee.findById(req.params.id);
@@ -89,6 +93,7 @@ router.put("/api/employeesdata/:id", (req, res) => {
 /* ---------------DELETE--------------- */
 
 router.delete("/api/employeesData/:id", (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
   async function removeEmployee() {
     if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
       await Employee.findByIdAndRemove(req.params.id);
