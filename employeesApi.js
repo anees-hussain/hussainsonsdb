@@ -51,17 +51,17 @@ router.get("/api/employeesdata/:id", (req, res) => {
 
 /* ---------------POST--------------- */
 router.post("/api/employeesdata", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
   const newEmployee = {
     name: req.body.name,
     designation: req.body.designation,
     phone: req.body.phone,
   };
-
+  
   const { error } = validateSchema(newEmployee);
   if (error) return res.status(400).send(error.details[0].message);
-
+  
   async function createEmployee() {
+    res.header("Access-Control-Allow-Origin", "*");
     const employee = new Employee(newEmployee);
     await employee.save();
     res.send([employee]);
@@ -73,9 +73,9 @@ router.post("/api/employeesdata", (req, res) => {
 /* ---------------PUT--------------- */
 
 router.put("/api/employeesdata/:id", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
   async function updateEmployee() {
     if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+      res.header("Access-Control-Allow-Origin", "*");
       let employee = await Employee.findById(req.params.id);
 
       employee.set(req.body);
@@ -93,9 +93,9 @@ router.put("/api/employeesdata/:id", (req, res) => {
 /* ---------------DELETE--------------- */
 
 router.delete("/api/employeesData/:id", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
   async function removeEmployee() {
     if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+      res.header("Access-Control-Allow-Origin", "*");
       await Employee.findByIdAndRemove(req.params.id);
       res.send("Deleted Successfully!");
     } else {
