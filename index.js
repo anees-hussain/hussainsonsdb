@@ -1,11 +1,14 @@
 require("dotenv").config();
 const express = require("express");
-const employees = require("./employeesApi");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const app = express();
+
 const port = process.env.PORT || 8000;
+const employees = require("./employeesApi");
 
 app.use(express.json());
+app.use(cors());
 app.use(employees);
 
 app.listen(port, () => console.log(`Server started listening at ${port}`));
